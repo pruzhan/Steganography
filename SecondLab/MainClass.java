@@ -32,12 +32,13 @@ public class MainClass {
                         for (int i = 0; i < Xarray.size(); i++) {
                             writer.write(Xarray.get(i) + "," + Yarray.get(i)+"\n");
                         }
-                        Process process = Runtime.getRuntime().exec("python Draw.py");
-                        process.waitFor();
-                        process.destroy();
+                        
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
+					Process process = Runtime.getRuntime().exec("python3 Draw.py");
+                    process.waitFor();
+                    process.destroy();
                     break;
                 }
                 case 4: {
