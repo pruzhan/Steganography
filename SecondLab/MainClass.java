@@ -26,9 +26,7 @@ public class MainClass {
                     break;
                 }
                 case 3: {
-                    System.out.println(Xarray);
-                    System.out.println(Yarray);
-                    try (FileWriter writer = new FileWriter("Arrays.txt")) {
+                    try (FileWriter writer = new FileWriter("Arrays.txt", true)) {
                         for (int i = 0; i < Xarray.size(); i++) {
                             writer.write(Xarray.get(i) + "," + Yarray.get(i)+"\n");
                         }
@@ -36,7 +34,7 @@ public class MainClass {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-					Process process = Runtime.getRuntime().exec("python3 Draw.py");
+                    Process process = Runtime.getRuntime().exec("python3 Draw.py");
                     process.waitFor();
                     process.destroy();
                     break;
