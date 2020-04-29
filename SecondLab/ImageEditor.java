@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 class ImageEditor {
     private String inputFilePath, outputFilePath;
-
+    int wordLength;
+    double PSNR;
     ImageEditor(String inputFilePath, String outputFilePath) {
         this.inputFilePath = inputFilePath;
         this.outputFilePath = outputFilePath;
@@ -21,11 +22,11 @@ class ImageEditor {
             Scanner wordReader = new Scanner(System.in);
             System.out.println("Встраиваемая информация:");
             String word = wordReader.nextLine();
-            int wordLength = word.length();
+            wordLength = word.length();
             String binaryLength = toBinString(wordLength);
             int count = (inputImage.getWidth() - 1) * inputImage.getHeight();
             if (wordLength > count / 8) throw new Exception("Информация не поместится в контейнер");
-            int mark = wordLength*8;
+            int mark = wordLength * 8;
             Alphabet alphabet = new Alphabet();
             ArrayList<Integer> binword = alphabet.wordToBinCode(word);
             for (int y = 0; y < inputImage.getHeight() - binaryLength.length(); y++) {
@@ -55,7 +56,7 @@ class ImageEditor {
                     int red = pixelColor.getRed();
                     int green = pixelColor.getGreen();
                     int blue = pixelColor.getBlue();
-                    if (pixelNumber/mark == 0) {
+                    if (pixelNumber / mark == 0) {
                         if (red % 2 < binword.get(bitNumber)) red += 1;
                         else if (red % 2 > binword.get(bitNumber)) red -= 1;
                         bitNumber++;
@@ -67,6 +68,8 @@ class ImageEditor {
             }
             File output = new File(outputFilePath);
             ImageIO.write(outputImage, "bmp", output);
+            PSNR psnr = new PSNR(inputFilePath, outputFilePath);
+            PSNR = psnr.PSNR;
         } catch (Exception e) {
             e.printStackTrace();
         }
